@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use App\Models\ProjectModel;
 
-class Home extends BaseController
+class Project extends BaseController
 {
     public function index()
     {
@@ -33,13 +33,13 @@ class Home extends BaseController
 
         $projectModel->save($project);
 
-        return redirect()->to('/')->with('message', 'Berhasil menyimpan data.');
+        return redirect()->back()->with('message', 'Berhasil menyimpan data.');
     }
 
     public function hapus()
     {
         $projectModel = new ProjectModel();
         $projectModel->delete($_POST['id']);
-        return redirect()->to('/')->with('message', 'Berhasil menghapus data.');
+        return redirect()->back()->with('message', 'Berhasil menghapus data.');
     }
 }

@@ -2,45 +2,48 @@
 
 namespace App\Controllers;
 
-use App\Models\ProjectModel;
+use App\Models\AlternatifModel;
 
 class Alternatif extends BaseController
 {
-    public function index()
+    public function index($project_id)
     {
         session()->set('breadcrumb', [
             0 => ['label' => 'Project', 'link' => route_to('/')],
             1 => ['label' => 'Alternatif', 'link' => route_to('alternatif')]
         ]);
 
-        $projectModel = new ProjectModel();
-        $project = $projectModel->findAll();
+        $alternatifModel = new AlternatifModel();
+        $alternatif = $alternatifModel->findByProject($project_id);
         $data = [
-            'project' => $project
+            'project_id' => $project_id,
+            'alternatif' => $alternatif,
         ];
-        return view('project', $data);
+        return view('alternatif', $data);
     }
 
     public function tambah()
     {
-        $projectModel = new ProjectModel();
+        $alternatifModel = new AlternatifModel();
 
-        if (!$this->validate($projectModel->validationRules, $projectModel->validationMessages))
+        if (!$this->validate($alternatifModel->validationRules, $alternatifModel->validationMessages))
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
 
-        $project = [
+        $alternatif = [
+            'project_id' => $_POST['project_id'],
             'nama' => $_POST['nama']
         ];
 
-        $projectModel->save($project);
+        if (!$alternatifModel->save($alternatif))
+            return redirect()->back()->withInput()->with('errors', ["Data {$alternatif['nama']} pada Nama Alternatif telah digunakan."]);
 
-        return redirect()->to('/')->with('message', 'Berhasil menyimpan data.');
+        return redirect()->back()->with('message', 'Berhasil menyimpan data.');
     }
 
     public function hapus()
     {
-        $projectModel = new ProjectModel();
-        $projectModel->delete($_POST['id']);
-        return redirect()->to('/')->with('message', 'Berhasil menghapus data.');
+        $alternatifModel = new alternatifModel();
+        $alternatifModel->delete($_POST['id']);
+        return redirect()->back()->with('message', 'Berhasil menghapus data.');
     }
 }
