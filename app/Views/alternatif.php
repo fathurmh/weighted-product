@@ -5,8 +5,12 @@
 <!-- Begin Page Content -->
 <div class="container">
 
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Alternatif</h1>
+    </div>
+
     <div class="row">
-        <div class="col-4 mt-2">
+        <div class="col-md-12 col-lg-4 mt-2 mb-3">
             <form action="<?= base_url('alternatif/tambah'); ?>" method="POST">
                 <input name="project_id" value="<?= $project_id; ?>" hidden>
                 <div class="mb-3">
@@ -15,16 +19,17 @@
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
+            <a type="button" class="btn btn-warning mt-3 mb-1" href="<?= base_url("kriteria/$project_id"); ?>">Kriteria ></a>
         </div>
 
-        <div class="col-8">
+        <div class="col-md-12 col-lg-8">
             <div class="table-responsive">
                 <table class="table table-bordered table-striped align-middle">
                     <thead>
                         <th width="5%" scope="col">No</th>
                         <th width="5%" scope="col">Kode</th>
-                        <th width="70%" scope="col">Nama</th>
-                        <th width="20%" scope="col">Aksi</th>
+                        <th width="80%" scope="col">Nama</th>
+                        <th width="10%" scope="col">Aksi</th>
                     </thead>
                     <tbody>
                         <?php if (count($alternatif) == 0) : ?>

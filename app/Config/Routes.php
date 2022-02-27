@@ -39,6 +39,10 @@ $routes->group('alternatif', function ($route) {
     $route->get('(:num)', 'Alternatif::index/$1');
 });
 
+$routes->group('kriteria', function ($route) {
+    $route->get('(:num)', 'Kriteria::index/$1');
+});
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing

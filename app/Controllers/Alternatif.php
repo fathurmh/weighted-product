@@ -42,7 +42,7 @@ class Alternatif extends BaseController
 
     public function hapus()
     {
-        $alternatifModel = new alternatifModel();
+        $alternatifModel = new AlternatifModel();
         $alternatifModel->delete($_POST['id']);
         return redirect()->back()->with('message', 'Berhasil menghapus data.');
     }
