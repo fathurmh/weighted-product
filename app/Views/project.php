@@ -16,7 +16,7 @@
                     <label for="nama-project" class="form-label">Nama Project</label>
                     <input type="text" class="form-control" id="nama-project" name="nama">
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary">Simpan</button>
             </form>
         </div>
 
@@ -24,9 +24,9 @@
             <div class="table-responsive">
                 <table class="table table-bordered table-striped align-middle">
                     <thead>
-                        <th width="5%" scope="col">No</th>
-                        <th width="65%" scope="col">Nama Project</th>
-                        <th width="30%" scope="col">Aksi</th>
+                        <th width="5%" scope="col" class="text-center">No</th>
+                        <th width="65%" scope="col" class="text-center">Nama Project</th>
+                        <th width="30%" scope="col" class="text-center">Aksi</th>
                     </thead>
                     <tbody>
                         <?php if (count($project) == 0) : ?>
@@ -37,9 +37,9 @@
                             <?php $no = 1; ?>
                             <?php foreach ($project as $value) : ?>
                                 <tr>
-                                    <td scope="row"><?= $no++; ?>.</td>
+                                    <td scope="row" class="text-center"><?= $no++; ?>.</td>
                                     <td><?= $value['nama']; ?></td>
-                                    <td>
+                                    <td class="text-center">
                                         <form action="<?= base_url('hapus'); ?>" method="POST">
                                             <a type="button" class="btn btn-sm btn-primary mb-1" href="<?= base_url("alternatif/{$value['id']}"); ?>">Alternatif</a>
                                             <a type="button" class="btn btn-sm btn-success mb-1" href="<?= base_url("kriteria/{$value['id']}"); ?>">Kriteria</a>

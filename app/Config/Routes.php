@@ -36,11 +36,12 @@ $routes->post('tambah', 'Project::tambah');
 $routes->post('hapus', 'Project::hapus');
 
 $routes->group('alternatif', function ($route) {
-    $route->get('(:num)', 'Alternatif::index/$1');
+    $route->get('(:num)/?(:num)?', 'Alternatif::index/$1/$2');
 });
 
 $routes->group('kriteria', function ($route) {
-    $route->get('(:num)', 'Kriteria::index/$1');
+    $route->get('(:num)/?(:num)?', 'Kriteria::index/$1/$2');
+    $route->get('normalisasi/(:num)', 'Kriteria::normalisasi/$1');
 });
 
 /*

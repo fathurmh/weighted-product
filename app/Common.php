@@ -13,3 +13,9 @@
  *
  * @see: https://codeigniter4.github.io/CodeIgniter4/
  */
+
+function is_assoc_array(array $arr)
+{
+    if (array() === $arr) return false;
+    return array_keys($arr) !== range(0, count($arr) - 1);
+}

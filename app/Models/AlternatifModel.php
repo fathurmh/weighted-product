@@ -27,7 +27,7 @@ class AlternatifModel extends Model
     protected $validationRules      = [
         'nama' => [
             'label' => 'Nama Alternatif',
-            'rules' => 'required'
+            'rules' => 'required|is_unique[alternatif.nama,id,{id}]'
         ]
     ];
     protected $validationMessages   = [
@@ -72,9 +72,14 @@ class AlternatifModel extends Model
         return $kode;
     }
 
-    public function cekNama($project_id, $nama)
+    public function cekNama($project_id, $nama, $id = null)
     {
-        $result = $this->builder()->select('kode')->where(['project_id' => $project_id, 'nama' => $nama])->get()->getResult();
+        $this->builder()->select('kode')->where(['project_id' => $project_id, 'nama' => $nama]);
+
+        if (isset($id) && !empty($id))
+            $this->builder()->where('id <>', $id);
+
+        $result = $this->builder()->get()->getResult();
 
         if (count($result) > 0)
             return false;
@@ -84,9 +89,11 @@ class AlternatifModel extends Model
 
     public function save($data): bool
     {
-        $data['kode'] = $this->kode($data['project_id']);
+        if (!isset($data['id'])) {
+            $data['kode'] = $this->kode($data['project_id']);
+        }
 
-        if ($this->cekNama($data['project_id'], $data['nama']))
+        if ($this->cekNama($data['project_id'], $data['nama'], $data['id'] ?? ''))
             return parent::save($data);
 
         return false;

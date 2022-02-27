@@ -39,7 +39,10 @@ class Project extends BaseController
     public function hapus()
     {
         $projectModel = new ProjectModel();
-        $projectModel->delete($_POST['id']);
+
+        if (!$projectModel->delete($_POST['id']))
+            return redirect()->back()->withInput()->with('error', "Gagal menghapus data.");
+
         return redirect()->back()->with('message', 'Berhasil menghapus data.');
     }
 }

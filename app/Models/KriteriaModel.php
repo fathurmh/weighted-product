@@ -52,7 +52,7 @@ class KriteriaModel extends Model
 
     public function findByProject($project_id)
     {
-        $this->builder()->select()->where('project_id', $project_id);
+        $this->builder()->select('*, (CASE WHEN jenis = 0 THEN "Benefit" ELSE "Cost" END) AS jenis_dd')->where('project_id', $project_id);
         return $this->builder()->get()->getResultArray();
     }
 
@@ -72,9 +72,14 @@ class KriteriaModel extends Model
         return $kode;
     }
 
-    public function cekNama($project_id, $nama)
+    public function cekNama($project_id, $nama, $id = null)
     {
-        $result = $this->builder()->select('kode')->where(['project_id' => $project_id, 'nama' => $nama])->get()->getResult();
+        $this->builder()->select('kode')->where(['project_id' => $project_id, 'nama' => $nama]);
+
+        if (isset($id) && !empty($id))
+            $this->builder()->where('id <>', $id);
+
+        $result = $this->builder()->get()->getResult();
 
         if (count($result) > 0)
             return false;
@@ -84,11 +89,25 @@ class KriteriaModel extends Model
 
     public function save($data): bool
     {
-        $data['kode'] = $this->kode($data['project_id']);
-
-        if ($this->cekNama($data['project_id'], $data['nama']))
+        if (!is_assoc_array($data)) {
             return parent::save($data);
+        } else {
+            if (!isset($data['id']))
+                $data['kode'] = $this->kode($data['project_id']);
 
-        return false;
+            if ($this->cekNama($data['project_id'], $data['nama'], $data['id'] ?? ''))
+                return parent::save($data);
+
+            return false;
+        }
+    }
+
+    public function resetNormalisasi($project_id)
+    {
+        $kriteria_list = $this->findByProject($project_id);
+        foreach ($kriteria_list as $key => $kriteria) {
+            $kriteria['normalisasi'] = 0;
+            $this->save($kriteria);
+        }
     }
 }
