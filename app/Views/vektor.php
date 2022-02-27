@@ -36,7 +36,7 @@
         <div class="col-md-12 col-lg-6 mt-2 mb-3">
             <div class="table-responsive">
                 <?php if ($sum_vektor_s > 0) : ?>
-                    <a type="button" class="btn btn-primary mb-3" href="<?= base_url("vektor/v/$project_id"); ?>">Hitung Vektor V</a>
+                    <a type="button" class="btn btn-primary mb-2" href="<?= base_url("vektor/v/$project_id"); ?>">Hitung Vektor V</a>
                 <?php else : ?>
                     <div class="mt-5"></div>
                 <?php endif; ?>
