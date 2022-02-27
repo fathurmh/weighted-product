@@ -32,7 +32,7 @@ class AlternatifModel extends Model
     ];
     protected $validationMessages   = [
         'nama' => [
-            'required' => 'Kolom {field} Harus diisi.',
+            'required' => 'Kolom {field} harus diisi.',
             'is_unique' => 'Data {value} pada {field} telah digunakan.',
         ]
     ];
@@ -50,9 +50,18 @@ class AlternatifModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-    public function findByProject($project_id)
+    public function findByProject($project_id, $orderBy = '')
     {
         $this->builder()->select()->where('project_id', $project_id);
+
+        $this->builder()->orderBy($orderBy);
+
+        return $this->builder()->get()->getResultArray();
+    }
+
+    public function countByProject($project_id)
+    {
+        $this->builder()->selectCount('id')->where('project_id', $project_id);
         return $this->builder()->get()->getResultArray();
     }
 

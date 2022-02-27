@@ -32,7 +32,7 @@ class KriteriaModel extends Model
     ];
     protected $validationMessages   = [
         'nama' => [
-            'required' => 'Kolom {field} Harus diisi.',
+            'required' => 'Kolom {field} harus diisi.',
             'is_unique' => 'Data {value} pada {field} telah digunakan.',
         ]
     ];
@@ -53,6 +53,12 @@ class KriteriaModel extends Model
     public function findByProject($project_id)
     {
         $this->builder()->select('*, (CASE WHEN jenis = 0 THEN "Benefit" ELSE "Cost" END) AS jenis_dd')->where('project_id', $project_id);
+        return $this->builder()->get()->getResultArray();
+    }
+
+    public function countByProject($project_id)
+    {
+        $this->builder()->selectCount('id')->where('project_id', $project_id);
         return $this->builder()->get()->getResultArray();
     }
 

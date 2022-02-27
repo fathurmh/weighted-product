@@ -3,7 +3,7 @@
 <?= $this->section('content'); ?>
 
 <!-- Begin Page Content -->
-<div class="container">
+<div class="container mb-5">
 
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Alternatif</h1>
@@ -57,6 +57,9 @@
                         <?php endif; ?>
                     </tbody>
                 </table>
+                <?php if ($normalized && $count_alternatif) : ?>
+                    <a type="button" class="btn btn-primary mb-3" href="<?= base_url("rating/$project_id"); ?>">Input Rating</a>
+                <?php endif; ?>
             </div>
         </div>
     </div>

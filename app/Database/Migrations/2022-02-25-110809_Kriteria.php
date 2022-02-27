@@ -42,8 +42,6 @@ class Kriteria extends Migration
         ]);
 
         $this->forge->addPrimaryKey('id');
-        $this->forge->addUniqueKey('kode');
-        $this->forge->addUniqueKey('nama');
         $this->forge->addForeignKey('project_id', 'project', 'id', 'CASCADE', 'CASCADE');
         $this->forge->createTable('kriteria');
     }

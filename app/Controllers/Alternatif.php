@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\AlternatifModel;
+use App\Models\KriteriaModel;
 
 class Alternatif extends BaseController
 {
@@ -14,7 +15,12 @@ class Alternatif extends BaseController
         ]);
 
         $alternatifModel = new AlternatifModel();
+        $kriteriaModel = new KriteriaModel();
+
         $alternatif_list = $alternatifModel->findByProject($project_id);
+        $kriteria_list = $kriteriaModel->findByProject($project_id);
+        $count_alternatif = $alternatifModel->countByProject($project_id);
+        $bobot_sum = array_sum(array_column($kriteria_list, 'normalisasi'));
 
         $alternatif = $alternatifModel->find($alternatif_id);
 
@@ -29,6 +35,8 @@ class Alternatif extends BaseController
             'project_id' => $project_id,
             'alternatif_list' => $alternatif_list,
             'alternatif' => $alternatif,
+            'count_alternatif' => $count_alternatif,
+            'normalized' => $bobot_sum != 0,
         ];
         return view('alternatif', $data);
     }

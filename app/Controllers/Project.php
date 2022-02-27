@@ -31,7 +31,8 @@ class Project extends BaseController
             'nama' => $_POST['nama']
         ];
 
-        $projectModel->save($project);
+        if (!$projectModel->save($project))
+            return redirect()->back()->withInput()->with('error', "Gagal menyimpan data.");
 
         return redirect()->back()->with('message', 'Berhasil menyimpan data.');
     }

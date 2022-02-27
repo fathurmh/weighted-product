@@ -37,11 +37,26 @@ $routes->post('hapus', 'Project::hapus');
 
 $routes->group('alternatif', function ($route) {
     $route->get('(:num)/?(:num)?', 'Alternatif::index/$1/$2');
+    $route->post('tambah', 'Alternatif::tambah');
+    $route->post('hapus', 'Alternatif::hapus');
 });
 
 $routes->group('kriteria', function ($route) {
     $route->get('(:num)/?(:num)?', 'Kriteria::index/$1/$2');
+    $route->post('tambah', 'Kriteria::tambah');
+    $route->post('hapus', 'Kriteria::hapus');
     $route->get('normalisasi/(:num)', 'Kriteria::normalisasi/$1');
+});
+
+$routes->group('rating', function ($route) {
+    $route->get('(:num)', 'Rating::index/$1');
+    $route->post('simpan', 'Rating::simpan');
+});
+
+$routes->group('vektor', function ($route) {
+    $route->get('(:num)', 'Vektor::index/$1');
+    $route->get('s/(:num)', 'Vektor::s/$1');
+    $route->get('v/(:num)', 'Vektor::v/$1');
 });
 
 /*

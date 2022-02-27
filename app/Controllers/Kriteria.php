@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\AlternatifModel;
 use App\Models\KriteriaModel;
 
 class Kriteria extends BaseController
@@ -15,7 +16,11 @@ class Kriteria extends BaseController
         ]);
 
         $kriteriaModel = new KriteriaModel();
+        $alternatifModel = new AlternatifModel();
+
         $kriteria_list = $kriteriaModel->findByProject($project_id);
+        $count_alternatif = $alternatifModel->countByProject($project_id);
+        $bobot_sum = array_sum(array_column($kriteria_list, 'normalisasi'));
 
         $kriteria = $kriteriaModel->find($kriteria_id);
 
@@ -32,6 +37,8 @@ class Kriteria extends BaseController
             'project_id' => $project_id,
             'kriteria_list' => $kriteria_list,
             'kriteria' => $kriteria,
+            'count_alternatif' => $count_alternatif,
+            'normalized' => $bobot_sum != 0,
         ];
         return view('kriteria', $data);
     }
@@ -80,6 +87,9 @@ class Kriteria extends BaseController
         $kriteria_list = $kriteriaModel->findByProject($project_id);
 
         $bobot_sum = array_sum(array_column($kriteria_list, 'bobot'));
+
+        if ($bobot_sum == 0)
+            return redirect()->to("kriteria/$project_id")->with('error', 'Total bobot tidak boleh 0.');
 
         foreach ($kriteria_list as &$kriteria) {
             $kriteria['normalisasi'] = round($kriteria['bobot'] / $bobot_sum, 6);
