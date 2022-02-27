@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\AlternatifModel;
 use App\Models\ProjectModel;
 
 class Project extends BaseController
@@ -11,7 +12,8 @@ class Project extends BaseController
         session()->set('breadcrumb', []);
 
         $projectModel = new ProjectModel();
-        $project = $projectModel->findAll();
+
+        $project = $projectModel->sudah_rank();
 
         $data = [
             'project' => $project

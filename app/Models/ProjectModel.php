@@ -49,4 +49,13 @@ class ProjectModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    public function sudah_rank()
+    {
+        $this->builder()->select('project.*, CASE WHEN SUM(alternatif.rank) > 0 THEN TRUE ELSE FALSE END AS sudah_rank')
+            ->join('alternatif', 'alternatif.project_id = project.id', 'LEFT')
+            ->groupBy('project.id');
+
+        return $this->builder()->get()->getResultArray();
+    }
 }

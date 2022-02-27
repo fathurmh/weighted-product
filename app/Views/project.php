@@ -25,8 +25,8 @@
                 <table class="table table-bordered table-striped align-middle">
                     <thead>
                         <th width="5%" scope="col" class="text-center">No</th>
-                        <th width="65%" scope="col" class="text-center">Nama Project</th>
-                        <th width="30%" scope="col" class="text-center">Aksi</th>
+                        <th width="60%" scope="col" class="text-center">Nama Project</th>
+                        <th width="35%" scope="col" class="text-center">Aksi</th>
                     </thead>
                     <tbody>
                         <?php if (count($project) == 0) : ?>
@@ -39,12 +39,15 @@
                                 <tr>
                                     <td scope="row" class="text-center"><?= $no++; ?>.</td>
                                     <td><?= $value['nama']; ?></td>
-                                    <td class="text-center">
+                                    <td class="text-left">
                                         <form action="<?= base_url('hapus'); ?>" method="POST">
                                             <a type="button" class="btn btn-sm btn-primary mb-1" href="<?= base_url("alternatif/{$value['id']}"); ?>">Alternatif</a>
-                                            <a type="button" class="btn btn-sm btn-success mb-1" href="<?= base_url("kriteria/{$value['id']}"); ?>">Kriteria</a>
+                                            <a type="button" class="btn btn-sm btn-primary mb-1" href="<?= base_url("kriteria/{$value['id']}"); ?>">Kriteria</a>
 
                                             <input name="id" value="<?= $value['id']; ?>" hidden>
+                                            <?php if ($value['sudah_rank']) : ?>
+                                                <a type="button" class="btn btn-sm btn-success mb-1" href="<?= base_url("vektor/{$value['id']}"); ?>">Hasil</a>
+                                            <?php endif; ?>
                                             <button type="submit" class="btn btn-sm btn-danger mb-1">Hapus</button>
                                         </form>
                                     </td>
